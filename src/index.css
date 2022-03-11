@@ -26,5 +26,11 @@ img {
 }
 
 ul, li, ol {
+  display: block;
   list-style-type: none;
+}
+
+button {
+  display: block;
+  cursor: pointer;
 }

@@ -11,6 +11,9 @@
 .App-todo {
   width: 399px;
   height: 600px;
+  display: flex;
+  flex-direction: column;
+  overflow-x: auto;
   padding: 41px 32px 57px;
   position: relative;
   background: #f4f4f4;
