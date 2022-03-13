@@ -1,7 +1,8 @@
 import { useState } from "react";
 import { Form } from "../Form/Form";
+import { TodoNestedItem } from "./TodoNestedItem";
 
-export const TodoItem = ({ id, text, nested, addNested }) => {
+export const TodoItem = ({ id, text, nested, addNested, getCheckedInNested }) => {
   const [show, setShow] = useState(false);
 
   return (
@@ -34,21 +35,15 @@ export const TodoItem = ({ id, text, nested, addNested }) => {
             fill="#413F3F"
           />
         </svg>
-        { !show && (<span className="todo-list__count">{nested.length}</span>)}
+        {!show && <span className="todo-list__count">{nested.length}</span>}
       </li>
       {show && (
         <div className="todo-list__nested">
-          { !nested.length ? true : (<ul className="nested">
-            {nested.map((el) => (
-              <li key={el.id}>
-                <label>
-                  <input type="checkbox" />
-                  <span className="nested-checkbox"></span>
-                  <span className="nested-list">{el.text}</span>
-                </label>
-              </li>
-            ))}
-          </ul>)}
+          {!nested.length ? (
+            <span>No tasks!</span>
+          ) : (
+            <TodoNestedItem nestedId={id} categoryItems={nested} getCheckedInNested={getCheckedInNested} />
+          )}
           <Form id={id} onSubmit={addNested} placeholder={"Write a task..."} />
         </div>
       )}

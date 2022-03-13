@@ -34,11 +34,26 @@ export const TodoList = () => {
     const newNestedList = {
       id: nestedLists[id].length + 1,
       text: value,
+      checked: false,
     };
 
     setNestedLists((prevNestedLists) => ({
       ...prevNestedLists,
       [id]: [...prevNestedLists[id], newNestedList],
+    }));
+  };
+
+  const getCheckedInNested = (nestedId, id, getChecked) => {
+    let updateNestedList = nestedLists[nestedId].map((item) => {
+      if (item.id === +id) {
+        return { ...item, checked: getChecked };
+      }
+      return item;
+    });
+
+    setNestedLists((prevNestedLists) => ({
+      ...prevNestedLists,
+      [nestedId]: updateNestedList,
     }));
   };
 
@@ -50,7 +65,7 @@ export const TodoList = () => {
   return (
     <div className="todo">
       {!lists.length ? (
-        true
+        <span>No Categories!</span>
       ) : (
         <ol className="todo-list">
           {lists.map((list) => (
@@ -59,12 +74,17 @@ export const TodoList = () => {
               text={list.text}
               nested={nestedLists[list.id]}
               addNested={handleAddNestedList}
+              getCheckedInNested={getCheckedInNested}
               key={list.id}
             />
           ))}
         </ol>
       )}
-      <Form id={lists.length + 1} onSubmit={handleAddList} placeholder={"Write a category..."}/>
+      <Form
+        id={lists.length + 1}
+        onSubmit={handleAddList}
+        placeholder={"Write a category..."}
+      />
     </div>
   );
 };
