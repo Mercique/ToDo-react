@@ -57,6 +57,15 @@ export const TodoList = () => {
     }));
   };
 
+  const handleDeleteList = (nestedId, id) => {
+    let updateNestedList = nestedLists[nestedId].filter((item) => item.id !== id);
+
+    setNestedLists((prevNestedLists) => ({
+      ...prevNestedLists,
+      [nestedId]: updateNestedList,
+    }));
+  };
+
   useEffect(() => {
     console.log(lists);
     console.log(nestedLists);
@@ -75,6 +84,7 @@ export const TodoList = () => {
               nested={nestedLists[list.id]}
               addNested={handleAddNestedList}
               getCheckedInNested={getCheckedInNested}
+              handleDeleteList={handleDeleteList}
               key={list.id}
             />
           ))}

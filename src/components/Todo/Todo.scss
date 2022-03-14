@@ -58,14 +58,40 @@
         font-size: 14.9673px;
         line-height: 18px;
         color: #413F3F;
-        &:hover span {
-          border-color: #FF4545;
+      }
+      .list-nested-item {
+        position: relative;
+        overflow: hidden;
+        &:hover {
+          span {
+            border-color: #FF4545;
+          }
+          .nested-btn {
+            right: 0;
+          }
         }
       }
       .nested {
         display: flex;
         flex-direction: column;
         gap: 24px;
+        &-btn {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          position: absolute;
+          top: 2px;
+          right: -17px;
+          border: none;
+          background: transparent;
+          transition: right .3s ease, transform .3s ease;
+          &:hover {
+            transform: rotate(-360deg);
+            svg path {
+              fill: #FF4545;
+            }
+          }
+        }
       }
       .nested-checkbox {
         position: relative;
@@ -75,6 +101,7 @@
         border-radius: 6px;
         border: 2px solid #C4C4C4;
         background: transparent;
+        transition: border-color .2s ease;
         &::before {
           content: '';
           display: block;

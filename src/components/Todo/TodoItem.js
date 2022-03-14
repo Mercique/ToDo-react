@@ -2,7 +2,14 @@ import { useState } from "react";
 import { Form } from "../Form/Form";
 import { TodoNestedItem } from "./TodoNestedItem";
 
-export const TodoItem = ({ id, text, nested, addNested, getCheckedInNested }) => {
+export const TodoItem = ({
+  id,
+  text,
+  nested,
+  addNested,
+  getCheckedInNested,
+  handleDeleteList,
+}) => {
   const [show, setShow] = useState(false);
 
   return (
@@ -42,7 +49,12 @@ export const TodoItem = ({ id, text, nested, addNested, getCheckedInNested }) =>
           {!nested.length ? (
             <span>No tasks!</span>
           ) : (
-            <TodoNestedItem nestedId={id} categoryItems={nested} getCheckedInNested={getCheckedInNested} />
+            <TodoNestedItem
+              nestedId={id}
+              categoryItems={nested}
+              getCheckedInNested={getCheckedInNested}
+              handleDeleteList={handleDeleteList}
+            />
           )}
           <Form id={id} onSubmit={addNested} placeholder={"Write a task..."} />
         </div>
