@@ -1,14 +1,10 @@
 import "./Todo.scss";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { TodoItem } from "./TodoItem";
 import { Form } from "../Form/Form";
 
 export const TodoList = () => {
-  const [lists, setLists] = useState([
-    { id: "list-1", text: "Productivity" },
-    { id: "list-2", text: "Assignments" },
-    { id: "list-3", text: "Work" },
-  ]);
+  const [lists, setLists] = useState([]);
 
   const [nestedLists, setNestedLists] = useState(
     lists.reduce((acc, cur) => {
@@ -17,16 +13,22 @@ export const TodoList = () => {
     }, {})
   );
 
-  const handleAddList = (id, value) => {
+  const getMaxId = (list) => {
+    return list.length > 0 ? list.reduce((a, b) => a > b ? a : b) + 1 : 1;
+  };
+
+  const handleAddList = (value) => {
+    const getId = getMaxId(lists.map((el) => +el.id.slice(5)));
+
     const newList = {
-      id: `list-${id}`,
+      id: `list-${getId}`,
       text: value,
     };
 
     setLists((prevLists) => [...prevLists, newList]);
     setNestedLists((prevNestedLists) => ({
       ...prevNestedLists,
-      [`list-${id}`]: [],
+      [`list-${getId}`]: [],
     }));
   };
 
@@ -58,7 +60,9 @@ export const TodoList = () => {
   };
 
   const handleDeleteList = (nestedId, id) => {
-    let updateNestedList = nestedLists[nestedId].filter((item) => item.id !== id);
+    let updateNestedList = nestedLists[nestedId].filter(
+      (item) => item.id !== id
+    );
 
     setNestedLists((prevNestedLists) => ({
       ...prevNestedLists,
@@ -66,15 +70,24 @@ export const TodoList = () => {
     }));
   };
 
-  useEffect(() => {
-    console.log(lists);
-    console.log(nestedLists);
-  }, [lists, nestedLists]);
+  const handleDeleteCategory = (nestedId, id) => {
+    let updateLists = lists.filter((item) => item.id !== nestedId);
+
+    delete nestedLists[nestedId];
+
+    setLists(updateLists);
+    setNestedLists((prevNestedLists) => {
+      const newNestedList = { ...prevNestedLists };
+
+      delete newNestedList[nestedId];
+      return newNestedList;
+    });
+  };
 
   return (
     <div className="todo">
       {!lists.length ? (
-        <span>No Categories!</span>
+        <span className="no-categories">No Categories!</span>
       ) : (
         <ol className="todo-list">
           {lists.map((list) => (
@@ -85,16 +98,13 @@ export const TodoList = () => {
               addNested={handleAddNestedList}
               getCheckedInNested={getCheckedInNested}
               handleDeleteList={handleDeleteList}
+              handleDeleteCategory={handleDeleteCategory}
               key={list.id}
             />
           ))}
         </ol>
       )}
-      <Form
-        id={lists.length + 1}
-        onSubmit={handleAddList}
-        placeholder={"Write a category..."}
-      />
+      <Form onSubmit={handleAddList} placeholder={"Write a category..."} />
     </div>
   );
 };

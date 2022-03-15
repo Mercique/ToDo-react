@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Form } from "../Form/Form";
+import { TodoDelete } from "./TodoDelete";
 import { TodoNestedItem } from "./TodoNestedItem";
 
 export const TodoItem = ({
@@ -9,6 +10,7 @@ export const TodoItem = ({
   addNested,
   getCheckedInNested,
   handleDeleteList,
+  handleDeleteCategory,
 }) => {
   const [show, setShow] = useState(false);
 
@@ -43,6 +45,11 @@ export const TodoItem = ({
           />
         </svg>
         {!show && <span className="todo-list__count">{nested.length}</span>}
+        <TodoDelete
+          nestedId={id}
+          id={id.slice(-1) - 1}
+          onDelete={handleDeleteCategory}
+        />
       </li>
       {show && (
         <div className="todo-list__nested">
@@ -56,7 +63,7 @@ export const TodoItem = ({
               handleDeleteList={handleDeleteList}
             />
           )}
-          <Form id={id} onSubmit={addNested} placeholder={"Write a task..."} />
+          <Form onSubmit={addNested} placeholder={"Write a task..."} />
         </div>
       )}
     </>

@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-export const Form = ({ id, onSubmit, placeholder }) => {
+export const Form = ({ onSubmit, placeholder }) => {
   const [value, setValue] = useState("");
 
   const handleChange = (e) => {
@@ -10,7 +10,7 @@ export const Form = ({ id, onSubmit, placeholder }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (value !== "") {
-      onSubmit(id, value);
+      onSubmit(value);
       setValue("");
     }
   };
