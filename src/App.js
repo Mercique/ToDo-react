@@ -1,13 +1,17 @@
 import "./App.css";
 import { TodoList } from "./components/Todo/TodoList";
+import { Provider } from "react-redux";
+import { store } from "./store";
 
 const App = () => (
-  <div className="App">
-    <div className="App-todo">
-      <h1 className="App-todo__header">To Do List</h1>
-      <TodoList />
+  <Provider store={store}>
+    <div className="App">
+      <div className="App-todo">
+        <h1 className="App-todo__header">To Do List</h1>
+        <TodoList />
+      </div>
     </div>
-  </div>
+  </Provider>
 );
 
 export default App;

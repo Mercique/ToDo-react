@@ -1,18 +1,37 @@
 import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  addNestedList,
+  checkedNestedList,
+  deleteNestedList,
+} from "../../store/TodoNestedLists/actions";
+import { selectNestedLists } from "../../store/TodoNestedLists/selectors";
 import { Form } from "../Form/Form";
 import { TodoDelete } from "./TodoDelete";
 import { TodoNestedItem } from "./TodoNestedItem";
 
-export const TodoItem = ({
-  id,
-  text,
-  nested,
-  addNested,
-  getCheckedInNested,
-  handleDeleteList,
-  handleDeleteCategory,
-}) => {
+export const TodoItem = ({ id, text, handleDeleteCategory }) => {
   const [show, setShow] = useState(false);
+  const dispatch = useDispatch();
+  const nestedLists = useSelector(selectNestedLists);
+
+  const handleAddNestedList = (value) => {
+    const newNestedList = {
+      id: Date.now(),
+      text: value,
+      checked: false,
+    };
+
+    dispatch(addNestedList(id, newNestedList));
+  };
+
+  const handleDeleteNestedList = (nestedId) => {
+    dispatch(deleteNestedList(id, nestedId));
+  };
+
+  const handleCheckedNestedList = (nestedId) => {
+    dispatch(checkedNestedList(id, nestedId));
+  };
 
   return (
     <>
@@ -44,26 +63,33 @@ export const TodoItem = ({
             fill="#413F3F"
           />
         </svg>
-        {!show && <span className="todo-list__count">{nested.length}</span>}
-        <TodoDelete
-          nestedId={id}
-          id={id.slice(-1) - 1}
-          onDelete={handleDeleteCategory}
-        />
+        {!show && (
+          <span className="todo-list__count">{nestedLists[id]?.length}</span>
+        )}
+        {!show && <TodoDelete id={id} onDelete={handleDeleteCategory} />}
       </li>
       {show && (
         <div className="todo-list__nested">
-          {!nested.length ? (
+          {!nestedLists[id]?.length ? (
             <span>No tasks!</span>
           ) : (
-            <TodoNestedItem
-              nestedId={id}
-              categoryItems={nested}
-              getCheckedInNested={getCheckedInNested}
-              handleDeleteList={handleDeleteList}
-            />
+            <ul className="nested">
+              {nestedLists[id]?.map((el) => (
+                <TodoNestedItem
+                  id={el.id}
+                  text={el.text}
+                  checked={el.checked}
+                  onChecked={handleCheckedNestedList}
+                  onDeleteNestedList={handleDeleteNestedList}
+                  key={el.id}
+                />
+              ))}
+            </ul>
           )}
-          <Form onSubmit={addNested} placeholder={"Write a task..."} />
+          <Form
+            onSubmit={handleAddNestedList}
+            placeholder={"Write a task..."}
+          />
         </div>
       )}
     </>

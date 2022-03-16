@@ -2,7 +2,7 @@
   display: flex;
   flex-direction: column;
   flex: 1;
-  .no-categories {
+  &-noCategories {
     margin-top: 50px;
     font-weight: 700;
     text-align: center;
@@ -12,16 +12,6 @@
     flex-direction: column;
     gap: 35px;
     margin-top: 20px;
-    &__item {
-      position: relative;
-      display: flex;
-      align-items: center;
-      font-weight: 700;
-      font-size: 15px;
-      line-height: 18px;
-      cursor: pointer;
-      color: #413F3F;
-    }
     .del-btn {
       display: none;
       align-items: center;
@@ -36,6 +26,28 @@
         transform: rotate(-360deg);
         svg path {
           fill: #FF4545;
+        }
+      }
+    }
+    &__item {
+      position: relative;
+      display: flex;
+      align-items: center;
+      font-weight: 700;
+      font-size: 15px;
+      line-height: 18px;
+      cursor: pointer;
+      color: #413F3F;
+      &:hover {
+        .del-btn {
+          display: flex;
+          top: 0;
+          right: 0;
+          background: #F4F4F4;
+          svg {
+            width: 20px;
+            height: 20px;
+          }
         }
       }
     }
@@ -85,6 +97,9 @@
       .list-nested-item {
         position: relative;
         overflow: hidden;
+        .del-btn {
+          display: flex;
+        }
         &:hover {
           span {
             border-color: #FF4545;
