@@ -1,3 +1,4 @@
+import "./Form.scss";
 import { useState } from "react";
 
 export const Form = ({ onSubmit, placeholder }) => {

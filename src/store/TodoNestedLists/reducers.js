@@ -3,6 +3,7 @@ import {
   ADD_NESTED_LIST,
   CHECKED_NESTED_LIST,
   DELETE_NESTED_LIST,
+  EDIT_NESTED_LIST,
 } from "./actions";
 
 const initialState = {};
@@ -37,21 +38,31 @@ export const nestedListsReducer = (state = initialState, action) => {
         [action.payload.id]: updateChecked,
       };
     }
-    case DELETE_LIST: {
-      const newNestedList = { ...state };
-
-      delete newNestedList[action.payload];
-      return newNestedList;
+    case EDIT_NESTED_LIST: {
+      const updateNestedList = state[action.payload.id].map((el) => {
+        if (el.id === action.payload.nestedId) {
+          return { ...el, text: action.payload.value };
+        }
+        return el;
+      });
+      return {
+        ...state,
+        [action.payload.id]: updateNestedList,
+      };
     }
     case DELETE_NESTED_LIST: {
       const updateNestedList = state[action.payload.id].filter(
         ({ id }) => id !== action.payload.nestedId
       );
-
       return {
         ...state,
         [action.payload.id]: updateNestedList,
       };
+    }
+    case DELETE_LIST: {
+      const updateNestedList = { ...state };
+      delete updateNestedList[action.payload];
+      return updateNestedList;
     }
     default:
       return state;

@@ -1,5 +1,6 @@
 export const ADD_NESTED_LIST = "NESTED_LIST::ADD_NESTED_LIST";
 export const CHECKED_NESTED_LIST = "NESTED_LIST::CHECKED_NESTED_LIST";
+export const EDIT_NESTED_LIST = "NESTED_LIST::EDIT_NESTED_LIST";
 export const DELETE_NESTED_LIST = "NESTED_LIST::DELETE_NESTED_LIST";
 
 export const addNestedList = (id, nestedList) => ({
@@ -15,6 +16,15 @@ export const checkedNestedList = (id, nestedId) => ({
   payload: {
     id,
     nestedId,
+  },
+});
+
+export const editNestedList = (id, nestedId, value) => ({
+  type: EDIT_NESTED_LIST,
+  payload: {
+    id,
+    nestedId,
+    value,
   },
 });
 

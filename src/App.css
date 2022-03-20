@@ -4,35 +4,6 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  color: #413F3F;
+  color: #413f3f;
   background: #656565;
-}
-
-.App-todo {
-  width: 399px;
-  height: 600px;
-  display: flex;
-  flex-direction: column;
-  overflow-x: auto;
-  padding: 41px 32px 57px;
-  position: relative;
-  background: #f4f4f4;
-  box-shadow: 16px 12px 53px rgba(0, 0, 0, 0.2);
-}
-
-.App-todo::before {
-  content: '';
-  display: block;
-  height: 14px;
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  background-image: url("./images/header.png");
-  background-repeat: no-repeat;
-  background-size: cover;
-}
-
-.App-todo__header {
-  text-align: center;
 }

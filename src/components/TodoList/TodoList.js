@@ -1,9 +1,9 @@
-import "./Todo.scss";
-import { TodoItem } from "./TodoItem";
-import { Form } from "../Form/Form";
+import "./TodoList.scss";
 import { useDispatch, useSelector } from "react-redux";
 import { selectLists } from "../../store/TodoLists/selectors";
-import { addList, deleteList } from "../../store/TodoLists/actions";
+import { addList, changeList, deleteList } from "../../store/TodoLists/actions";
+import { TodoItem } from "../TodoItem/TodoItem";
+import { Form } from "../Form/Form";
 
 export const TodoList = () => {
   const dispatch = useDispatch();
@@ -24,27 +24,34 @@ export const TodoList = () => {
     dispatch(addList(newList));
   };
 
-  const handleDeleteCategory = (id) => {
+  const handleChangeValue = (id, value) => {
+    dispatch(changeList(id, value));
+  };
+
+  const handleDeleteList = (id) => {
     dispatch(deleteList(id));
   };
 
   return (
-    <div className="todo">
+    <div className="todo-list">
       {!lists?.length ? (
         <span className="todo-noCategories">No Categories!</span>
       ) : (
-        <ol className="todo-list">
+        <ol className="todo-list__categories">
           {lists.map((list) => (
             <TodoItem
               id={list.id}
               text={list.text}
-              handleDeleteCategory={handleDeleteCategory}
+              modalChange={handleChangeValue}
+              modalDelete={handleDeleteList}
               key={list.id}
             />
           ))}
         </ol>
       )}
-      <Form onSubmit={handleAddList} placeholder={"Write a category..."} />
+      <div className="todo-list__form">
+        <Form onSubmit={handleAddList} placeholder={"Write a category..."} />
+      </div>
     </div>
   );
 };

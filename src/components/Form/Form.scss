@@ -1,0 +1,42 @@
+.todo-form {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  button[type="submit"] {
+    width: 20px;
+    height: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 6px;
+    border: none;
+    background: #e2e2e2;
+    transition: background 0.2s ease;
+    svg {
+      display: none;
+    }
+    &:hover {
+      background: #929292;
+    }
+    &:active {
+      background: #494949;
+      svg {
+        display: block;
+      }
+    }
+  }
+  input[type="text"] {
+    flex: 1;
+    height: 100%;
+    background: #0000;
+    border: none;
+    font-family: "Inter", sans-serif;
+    font-weight: 400;
+    font-size: 15px;
+    line-height: 18px;
+    outline: none;
+    &::placeholder {
+      color: rgba(65, 63, 63, 0.6);
+    }
+  }
+}

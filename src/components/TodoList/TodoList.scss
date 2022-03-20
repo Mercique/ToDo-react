@@ -1,0 +1,20 @@
+.todo-list {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  .todo-noCategories {
+    margin-top: 50px;
+    font-weight: 700;
+    text-align: center;
+  }
+  &__categories {
+    display: flex;
+    flex-direction: column;
+    gap: 35px;
+    margin-top: 20px;
+  }
+  &__form {
+    margin-top: auto;
+    padding-top: 20px;
+  }
+}
